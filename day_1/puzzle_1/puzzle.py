@@ -33,10 +33,12 @@ class CalibrationSumExtractor:
     def get_sum(self) -> int:
         return sum(self._get_calibration_value(self._extract_digits(line)) for line in self.lines)
 
-    def _extract_digits(self, line: str) -> list[int]:
+    @staticmethod
+    def _extract_digits(line: str) -> list[int]:
         return [int(s) for s in line if s.isdigit()]
 
-    def _get_calibration_value(self, digits: list[int]) -> int:
+    @staticmethod
+    def _get_calibration_value(digits: list[int]) -> int:
         return digits[0] * 10 + digits[-1]
 
 
