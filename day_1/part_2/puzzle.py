@@ -28,7 +28,7 @@ You can also [Shareon Twitter Mastodon] this puzzle.
 """
 from typing import Optional
 
-from day_1.puzzle_1.puzzle import CalibrationSumExtractor
+from day_1.part_1.puzzle import CalibrationSumExtractor
 
 
 class CalibrationSumWordExtractor(CalibrationSumExtractor):

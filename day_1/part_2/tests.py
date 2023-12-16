@@ -1,6 +1,6 @@
 import pytest
 
-from day_1.puzzle_2.puzzle import CalibrationSumWordExtractor
+from day_1.part_2.puzzle import CalibrationSumWordExtractor
 
 
 @pytest.mark.parametrize(
