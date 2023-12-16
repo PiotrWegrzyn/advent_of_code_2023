@@ -43,6 +43,6 @@ class CalibrationSumExtractor:
 
 
 if __name__ == '__main__':
-    input_lines = open('calibration_input.txt').read().splitlines()
+    input_lines = open('../calibration_input.txt').read().splitlines()
     extractor = CalibrationSumExtractor(input_lines)
     print(extractor.get_sum())

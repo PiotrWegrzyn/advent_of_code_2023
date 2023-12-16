@@ -29,7 +29,7 @@ def test_get_calibration_value(line, expected):
     assert extractor._get_calibration_value(line) == expected
 
 
-def test_get_calibration_value():
+def test_calibration_sum_extractor():
     lines = [
         '1abc2',
         'pqr3stu8vwx',
