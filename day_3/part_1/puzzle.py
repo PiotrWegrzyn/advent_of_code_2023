@@ -39,13 +39,13 @@ class EngineMap:
 
     def get_engine_part_numbers(self) -> list[int]:
         numbers = []
-        for y in range(len(engine_map.map)):
+        for y in range(len(self.map)):
             skip_stack = 0
-            for x in range(len(engine_map.map[y])):
+            for x in range(len(self.map[y])):
                 if skip_stack > 0:
                     skip_stack -= 1
                     continue
-                if engine_map.map[y][x].isdigit():
+                if self.map[y][x].isdigit():
                     number_len = self.get_len_of_number(x, y)
                     skip_stack = number_len - 1
                     neighbours = self.get_neighbours(x, y, digits=number_len)
@@ -54,22 +54,22 @@ class EngineMap:
 
         return numbers
 
-    def get_neighbours(self, x: int, y: int, digits=1) -> str:
-        x_start = max(0, x - 1)
-        x_stop = min(len(self.map)-1, x + 1 + digits - 1)
-        y_start = max(0, y - 1)
-        y_stop = min(len(self.map[0])-1, y + 1)
-
-        neighbours = ''
-        if y-1 >= 0:
-            neighbours += self.map[y_start][x_start:x_stop+1]
-
-        neighbours += self.map[y][x_start] + self.map[y][x_stop]
-
-        if y+1 < len(self.map):
-            neighbours += self.map[y_stop][x_start:x_stop+1]
+    def get_neighbours(self, x: int, y: int, digits=1) -> list[list[str]]:
+        neighbours = []
+        for row, i in enumerate(range(y - 1, y + 2)):
+            neighbours.append([])
+            for j in range(x - 1, x + 1 + digits):
+                neighbours[row].append(self._get_value(j, i))
 
         return neighbours
+
+    def _get_value(self, x, y) -> str:
+        try:
+            if x < 0 or y < 0:
+                return ''
+            return self.map[y][x]
+        except IndexError:
+            return ''
 
     def get_len_of_number(self, x, y) -> int:
         digits = 1
@@ -78,11 +78,14 @@ class EngineMap:
             digits += 1
         return digits
 
-    def contains_symbol(self, neighbours: str) -> bool:
-        return bool(re.findall(r'([^.\d])', neighbours))
+    def contains_symbol(self, neighbours: list[list[str]]) -> bool:
+        return bool(re.findall(r'([^.\d])', ''.join(map(''.join, neighbours))))
 
     def build_number(self, x, y, number_len) -> int:
-        return int(self.map[y][x:x+number_len])
+        try:
+            return int(self.map[y][x:x+number_len])
+        except ValueError:
+            return 0
 
 
 if __name__ == '__main__':
